@@ -1,38 +1,109 @@
-.App {
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Form alanı */
+.fortune-teller-form {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+}
+
+/* Başlık */
+.fortune-teller-form h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Label ve input alanları */
+.fortune-teller-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.fortune-teller-form input[type="text"],
+.fortune-teller-form input[type="number"] {
+  width: 100%;
+
+  padding-top: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Submit butonu */
+.fortune-teller-form button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Submit butonu hover etkisi */
+.fortune-teller-form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.fortune-teller-form textarea {
+  width: 100%;
+  padding-top: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  resize: vertical;
+  /* Kullanıcılar boyutlandırabilir */
+}
+
+.fortune-teller-form select {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.age-input {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  width: 140px;
+  margin-bottom: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.age-input button {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.age-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
 }
