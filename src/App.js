@@ -55,8 +55,6 @@ const App = () => {
     }
   };
 
-
-
   const clearInput = () => {
     setFortune('');
     setAge(18);
