@@ -1,43 +1,51 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './App.css';
+import './style/App.css';
+import './style/Alerts.css';
 
 const App = () => {
   const [fortune, setFortune] = useState('');
   const [age, setAge] = useState(18);
-  const [relationship, setRelationship] = useState('');
-  const [gender, setGender] = useState('');
-  const [mood, setMood] = useState('');
+  const [relationship, setRelationship] = useState('Evli');
+  const [gender, setGender] = useState('Bay');
+  const [mood, setMood] = useState('Mutlu');
+  const [message, setMessage] = useState(null);
+  const [alertType, setAlertType] = useState(null);
+
+  const showAlert = (type, text) => {
+    setMessage(text);
+    setAlertType(type);
+
+    setTimeout(() => {
+      setMessage(null);
+      setAlertType(null);
+    }, 3000);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await axios.post('http://192.168.58.1:5000/fortune', {
+      fortune,
+      age: parseInt(age),
+      relationship,
+      gender,
+      mood,
+    }).then((response) => {
+      console.log(response.data);
+      showAlert("success", "Fal Başarılı Bir şekilde Kayıt Edildi.");
+    })
+      .catch((error) => {
+        showAlert("erorr", "Kayıt Başarılı Olamadı!");
+        console.error(error);
+      });
 
-    try {
-      await axios.post('http://192.168.58.1/fortune', {
-        fortune,
-        age: parseInt(age),
-        relationship,
-        gender,
-        mood,
-      }).then((response) => {
-        console.log(response.data);
-      })
-        .catch((error) => {
+    clearInput();
 
-          console.error(error);
-        });
+  };
 
-      // Clear form fields on successful submission
-      setFortune('');
-      setAge('');
-      setRelationship('');
-      setGender('');
-      setMood('');
-
-
-    } catch (error) {
-      console.error(error);
-    }
+  const handleReset = async (e) => {
+    e.preventDefault();
+    clearInput();
   };
 
   const handleAgeChange = (e) => {
@@ -48,11 +56,25 @@ const App = () => {
   };
 
 
+
+  const clearInput = () => {
+    setFortune('');
+    setAge(18);
+    setRelationship('Evli');
+    setGender('Bay');
+    setMood('Mutlu');
+  };
+
   return (
     <div class="fortune-teller-form">
 
       <h1>Fortune Teller</h1>
-      <form onSubmit={handleSubmit}>
+
+
+      <div className="alerts-container">
+        {message && <div className={`alert ${alertType}`}>{message}</div>}
+      </div>
+      <form onSubmit={handleSubmit} onReset={handleReset}>
         <label>
           Fal:
           <textarea
@@ -65,18 +87,14 @@ const App = () => {
         <br />
         <label>
           Yaş:
-          <div class="age-input">
-            <button type="button" onClick={() => setAge(Math.max(parseInt(age) - 1, 0))}>-</button>
-            <input
-              type="number"
-              value={age}
-              onChange={handleAgeChange} // onChange olayını handleAgeChange işlevine bağlıyoruz
-              required
-            />
-            <button type="button" onClick={() => setAge(parseInt(age) + 1)}>+</button>
-          </div>
+          <input
+            type="number"
+            value={age}
+            onChange={handleAgeChange} // onChange olayını handleAgeChange işlevine bağlıyoruz
+            required
+          />
         </label>
-        <br />
+
         <label>
           İlişki Durumu:
           <select value={relationship} onChange={(e) => setRelationship(e.target.value)} required>
@@ -105,8 +123,14 @@ const App = () => {
           </select>
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button type="submit">Kaydet</button>
+        <button type="reset">Temizle</button>
+
       </form>
+
+      <div className="alerts-container">
+        {message && <div className={`alert ${alertType}`}>{message}</div>}
+      </div>
     </div>
   );
 };
